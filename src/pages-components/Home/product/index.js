@@ -98,7 +98,7 @@ export default function Items({ item }) {
             </View>
 
             <Modal isVisible={isModalVisible}>
-                <View className="w-full h-[90%] bg-blue-100 pt-8 px-4 pb-32">
+                <View className="w-full h-[95%] bg-blue-100 pt-8 px-4 pb-32 rounded-xl">
                     <View>
                         <TouchableOpacity onPress={handleModal}>
                             <Ionicons name='arrow-back' size={34} />
@@ -200,24 +200,24 @@ export default function Items({ item }) {
                         ) : ''}
                         {item.id === 2 || item.id === 6 ? (
                             <>
-                                <Text>Colors:</Text>
+                                <Text>Cores:</Text>
                                 {color === 'red' ? (
-                                    <TouchableOpacity onPress={() => setColor('red')} className="border p-3 bg-red-700 rounded-full" />
+                                    <TouchableOpacity onPress={() => setColor('red')} className="border-2 p-3 bg-red-500 rounded-full" />
                                 ) : (
                                     <TouchableOpacity onPress={() => setColor('red')} className=" border  p-3 bg-red-500 rounded-full" />)
                                 }
                                 {color === 'black' ? (
-                                    <TouchableOpacity onPress={() => setColor('black')} className="border p-3 bg-black rounded-full" />
+                                    <TouchableOpacity onPress={() => setColor('black')} className="border-2 p-3 bg-black rounded-full" />
                                 ) : (
-                                    <TouchableOpacity onPress={() => setColor('black')} className="border p-3 bg-gray-800 rounded-full" />)
+                                    <TouchableOpacity onPress={() => setColor('black')} className="border p-3 bg-black rounded-full" />)
                                 }
                                 {color === 'gold' ? (
-                                    <TouchableOpacity onPress={() => setColor('gold')} className="border p-3 bg-yellow-700 rounded-full" />
+                                    <TouchableOpacity onPress={() => setColor('gold')} className="border-2 p-3 bg-yellow-500 rounded-full" />
                                 ) : (
                                     <TouchableOpacity onPress={() => setColor('gold')} className="border p-3 bg-yellow-500 rounded-full" />)
                                 }
                                 {color === 'white' ? (
-                                    <TouchableOpacity onPress={() => setColor('white')} className="border p-3 bg-gray-200 rounded-full" />
+                                    <TouchableOpacity onPress={() => setColor('white')} className="border-2 p-3 bg-white rounded-full" />
                                 ) : (
                                     <TouchableOpacity onPress={() => setColor('white')} className="border p-3 bg-white rounded-full" />)
                                 }
