@@ -6,8 +6,7 @@ import { Ionicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CartItem from '../../pages-components/Cart/cartItem';
 
-
-export default function Cart({ navigation }) {
+export default function Cart() {
     const [cartItems, setCartItems] = useState();
     const [isLoaded, setIsLoaded] = useState(true);
     const [clearCart, setClearCart] = useState(false);
@@ -15,8 +14,14 @@ export default function Cart({ navigation }) {
 
     const isFocused = useIsFocused();
 
+    //Função para finalizar compra
+    function endBuy() {
+        Alert.alert("Compra finalizada com sucesso!!")
+        setFinalValue(0)
+        clearAsync();
+    }
 
-
+    //Função para receber dados do carrinho e valor final da compra
     async function setAsyncStorage() {
         const items = JSON.parse(await AsyncStorage.getItem('cart'));
         setCartItems(items)
@@ -28,18 +33,11 @@ export default function Cart({ navigation }) {
         }, 1 * 10)
     }
 
-
-
+    //Função para limpar carrinho
     async function clearAsync() {
         await AsyncStorage.setItem('cart', JSON.stringify([]))
         setFinalValue(0)
         setClearCart(!clearCart);
-    }
-
-    function endBuy() {
-        Alert.alert("Compra finalizada com sucesso!!")
-        setFinalValue(0)
-        clearAsync();
     }
 
     useEffect(() => {
@@ -48,7 +46,6 @@ export default function Cart({ navigation }) {
             setAsyncStorage();
         }
     }, [isFocused, clearCart])
-
 
     if (isLoaded) {
         return (
@@ -63,6 +60,7 @@ export default function Cart({ navigation }) {
                         <Text className="text-white">Limpar <Ionicons name='trash' /></Text>
                     </TouchableOpacity>
                 </View>
+
                 <ScrollView>
                     {cartItems ? (
                         <>

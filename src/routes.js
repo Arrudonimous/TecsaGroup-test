@@ -22,7 +22,7 @@ export default function Routes() {
             })}
         >
             <Tab.Screen component={HomeScreen} name="Home" options={{
-                tabBarIcon: ({ size, color }) => (
+                tabBarIcon: () => (
                     <Entypo name="home" size={24} color={'#ffff'} />
                 ),
                 tabBarLabelStyle: {
@@ -30,7 +30,7 @@ export default function Routes() {
                 },
             }} />
             <Tab.Screen component={CartScreen} name="Carrinho" options={{
-                tabBarIcon: ({ size, color }) => (
+                tabBarIcon: () => (
                     <Entypo name="shopping-cart" size={24} color={'#ffffff'} />
                 ),
                 tabBarLabelStyle: {

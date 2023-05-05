@@ -13,7 +13,6 @@ export default function CartItem({ item, quantity, color, size, totalValue }) {
             </View>
 
             <View className="flex h-full justify-center items-end">
-
                 <Text className="mb-2">{quantity} und</Text>
                 {size.trim() && (
                     <Text>Tam {size}</Text>

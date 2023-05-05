@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { Ionicons } from "@expo/vector-icons";
 
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 
@@ -17,27 +16,48 @@ export default function Items({ item }) {
 
     const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
+    //Função para aumentar quantidade do produto
     function incrementValue() {
         setProductQuantity(Number(productQuantity) + 1)
     }
 
+    //Função para diminuir quantidade do produto
     function decreaseValue() {
         if (productQuantity > 0) {
             setProductQuantity(Number(productQuantity) - 1)
         }
     }
 
+    //Função para adicionar produto ao carrinho
     async function handleAddToCart({ item, size, productQuantity, color }) {
+        //Verificando se foi adicionado um tamanho ou cor para os respectivos itens
+        if (item.id === 1 || item.id === 3 || item.id === 4 || item.id === 5 || item.id === 7 || item.id === 8) {
+            if (!size.trim()) {
+                return Alert.alert("Selecione um tamanho para adicionar o item ao carrinho")
+            }
+        }
+
+        if (item.id === 2 || item.id === 6) {
+            if (!color.trim()) {
+                return Alert.alert("Selecione uma cor para adicionar o item ao carrinho")
+            }
+        }
+
+        //Calculando o valor total do carrinho
         const totalValue = Number(productQuantity) * Number(item.price);
 
+        //Adicionando o item escolhido ao array de items do carrinho
         cartItens.push({ item, size, productQuantity, color, totalValue })
         await AsyncStorage.setItem('cart', JSON.stringify(cartItens))
 
         setIsModalVisible(false);
-        Alert.alert("Item adicionado ao carrinho!");
+        return Alert.alert("Item adicionado ao carrinho!");
     }
 
+    //Função para receber itens do carrinho
     async function getCartItens() {
+        //Pegando itens do carrinho de comprar, no caso de nao haver nenhum
+        //Reinicia o array de itens
         const items = await AsyncStorage.getItem("cart")
         if (items === null) {
             await AsyncStorage.setItem('cart', JSON.stringify([]))
@@ -45,9 +65,8 @@ export default function Items({ item }) {
         setCartItens(JSON.parse(items));
     }
 
+    //Função calcular valor final dos itens do carrinho e salvando
     async function handleChangeFinalValue() {
-
-
         const valorTotal = cartItens.reduce(function (total, item) {
             const individualValue = Number(item.totalValue);
             return total + individualValue;
@@ -57,9 +76,7 @@ export default function Items({ item }) {
 
     useEffect(() => {
         getCartItens();
-
         handleChangeFinalValue();
-
     }, [cartItens])
 
     return (
