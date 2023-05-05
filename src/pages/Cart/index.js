@@ -16,6 +16,9 @@ export default function Cart() {
 
     //Função para finalizar compra
     function endBuy() {
+        if (cartItems.length === 0) {
+            return Alert.alert("Adicione itens ao seu carrinho antes de finalizar a compra")
+        }
         Alert.alert("Compra finalizada com sucesso!!")
         setFinalValue(0)
         clearAsync();
@@ -46,7 +49,6 @@ export default function Cart() {
             setAsyncStorage();
         }
     }, [isFocused, clearCart])
-
     if (isLoaded) {
         return (
             <View className="flex-1 pt-14 px-5">
@@ -62,7 +64,7 @@ export default function Cart() {
                 </View>
 
                 <ScrollView>
-                    {cartItems ? (
+                    {cartItems && (
                         <>
                             {
                                 cartItems.map((item) => (
@@ -70,8 +72,6 @@ export default function Cart() {
                                 ))
                             }
                         </>
-                    ) : (
-                        <Text>oi</Text>
                     )}
                 </ScrollView>
 
