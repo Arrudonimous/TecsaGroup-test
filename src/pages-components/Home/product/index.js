@@ -45,8 +45,21 @@ export default function Items({ item }) {
         setCartItens(JSON.parse(items));
     }
 
+    async function handleChangeFinalValue() {
+
+
+        const valorTotal = cartItens.reduce(function (total, item) {
+            const individualValue = Number(item.totalValue);
+            return total + individualValue;
+        }, 0);
+        await AsyncStorage.setItem('totalValue', valorTotal.toString())
+    }
+
     useEffect(() => {
         getCartItens();
+
+        handleChangeFinalValue();
+
     }, [cartItens])
 
     return (

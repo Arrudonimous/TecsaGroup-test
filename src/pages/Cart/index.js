@@ -11,22 +11,24 @@ export default function Cart({ navigation }) {
     const [cartItems, setCartItems] = useState();
     const [isLoaded, setIsLoaded] = useState(true);
     const [clearCart, setClearCart] = useState(false);
-    const [finalValue, setFinalValue] = useState('');
+    const [finalValue, setFinalValue] = useState(0);
+
     const isFocused = useIsFocused();
+
+
 
     async function setAsyncStorage() {
         const items = JSON.parse(await AsyncStorage.getItem('cart'));
         setCartItems(items)
-        const valorTotal = cartItems.reduce(function (total, item) {
-            const individualValue = Number(item.totalValue);
-            return total + individualValue;
-        }, 0);
-        setFinalValue(valorTotal)
+
+        const finalValue = await AsyncStorage.getItem('totalValue')
+        setFinalValue(finalValue);
         setTimeout(() => {
             setIsLoaded(true);
-
         }, 1 * 10)
     }
+
+
 
     async function clearAsync() {
         await AsyncStorage.setItem('cart', JSON.stringify([]))
@@ -75,14 +77,12 @@ export default function Cart({ navigation }) {
                     )}
                 </ScrollView>
 
-                {cartItems && (
-                    <View className="bg-blue-500 h-12 mb-2 flex w-full rounded-lg p-2 justify-between items-center flex-row">
-                        <Text className="text-white text-lg">Valor total: R$ {finalValue}</Text>
-                        <TouchableOpacity className="bg-blue-950 px-4 py-2 rounded-lg" onPress={endBuy}>
-                            <Text className="text-white">Finalizar</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
+                <View className="bg-blue-500 h-12 mb-2 flex w-full rounded-lg p-2 justify-between items-center flex-row">
+                    <Text className="text-white text-lg">Valor total: R$ {finalValue}</Text>
+                    <TouchableOpacity className="bg-blue-950 px-4 py-2 rounded-lg" onPress={endBuy}>
+                        <Text className="text-white">Finalizar</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
